@@ -1,5 +1,6 @@
 let playerId = 0;
 let isGameOver = false;
+let movesRemaining = 9;
 
 const containerElem = document.getElementById("container");
 const handleContainerClick = function(e){
@@ -12,6 +13,9 @@ const handleContainerClick = function(e){
     const isLegalMove = checkLegalMove(cellElem);
 
     if(isLegalMove){
+        const revisedMovesRemaining = decrementMoves(movesRemaining);
+        movesRemaining = revisedMovesRemaining;
+        
         const revisedPlayerSymbol = getPlayerSymbol(cellElem);
         cellElem.innerText = revisedPlayerSymbol;
 
@@ -19,7 +23,7 @@ const handleContainerClick = function(e){
         playerId = revisedPlayerId;
         
         const isWinner = checkWinner();
-        const isDraw = checkDraw();
+        const isDraw = checkDraw(movesRemaining);
 
        if (isWinner){
            showWinner();
@@ -39,6 +43,10 @@ const updateDisplay = function(givenPlayerId){
     const playerTurnElem = document.getElementById("playerTurn");
     const revisedCellValue = getPlayerSymbol(givenPlayerId);
     playerTurnElem.innerText = revisedCellValue + "'s Turn";
+}
+
+const decrementMoves = function(movesRemaining){
+    return movesRemaining - 1;
 }
 
 const getPlayerSymbol = function(givenPlayerId){
@@ -67,8 +75,11 @@ const checkWinner = function(){
     return false;
 }
 
-const checkDraw = function(){
-    return true;
+const checkDraw = function(givenMovesRemaining){
+    if (givenMovesRemaining === 0){
+        return true;
+    } 
+    return false;
 }
 
 const showWinner = function(){
