@@ -1,6 +1,16 @@
 let playerId = 0;
 let isGameOver = false;
 let movesRemaining = 9;
+const subgrids = [
+    [[0,0], [1,1], [2,2]], 
+    [[0,0], [0,1], [0,2]],
+    [[1,0], [1,1], [1,2]],
+    [[2,0], [2,1], [2,2]], 
+    [[0,0], [1,0], [2,0]],
+    [[0,1], [1,1], [2,1]],
+    [[0,2], [1,2], [2,2]],
+    [[0,2], [1,1], [2,0]],
+];
 
 const containerElem = document.getElementById("container");
 const handleContainerClick = function(e){
@@ -16,13 +26,13 @@ const handleContainerClick = function(e){
         const revisedMovesRemaining = decrementMoves(movesRemaining);
         movesRemaining = revisedMovesRemaining;
         
-        const revisedPlayerSymbol = getPlayerSymbol(cellElem);
-        cellElem.innerText = revisedPlayerSymbol;
+        const playerSymbol = getPlayerSymbol(cellElem);
+        cellElem.innerText = playerSymbol;
 
         const revisedPlayerId = incrementPlayer(playerId);
         playerId = revisedPlayerId;
         
-        const isWinner = checkWinner();
+        const isWinner = checkWinner(playerSymbol, containerElem, subgrids);
         const isDraw = checkDraw(movesRemaining);
 
        if (isWinner){
@@ -71,8 +81,40 @@ const checkLegalMove = function(givenCellElem){
     return isLegal;
 }
 
-const checkWinner = function(){
-    return false;
+const checkWinner = function(givenPlayerSymbol, givenContainerElem, givenSubgrids){
+    let result = false;
+    let winCount = 0;
+    const desiredCount = givenSubgrids[0].length;
+    const numSubgrids = givenSubgrids.length;
+
+    givenSubgrids.map(subgrid => {
+        subgrid.map(cell => {
+            let cellValue = getCellValueAtCoord(cell);
+            if (cellValue === givenPlayerSymbol){
+                winCount = winCount + 1;
+            }
+        });
+
+        if(winCount === desiredCount){
+            result = true;
+        }
+        else {
+            winCount = 0
+        }
+    })
+    
+
+    return result;
+}
+
+const getCellValueAtCoord = function(givenCellCoord){
+    const x = givenCellCoord[0];
+    const y = givenCellCoord[1];
+    const scalar = x + "," + y;
+    const targetElem = document.querySelector("[data-cell='" + scalar + "']");
+    const cellValue = targetElem.innerText;
+
+    return cellValue;
 }
 
 const checkDraw = function(givenMovesRemaining){
