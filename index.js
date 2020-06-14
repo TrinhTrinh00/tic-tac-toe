@@ -27,7 +27,7 @@ const handleContainerClick = function(e){
         movesRemaining = revisedMovesRemaining;
         
         const playerSymbol = getPlayerSymbol(cellElem);
-        cellElem.innerText = playerSymbol;
+        setCellValue(cellElem, playerSymbol);
 
         const revisedPlayerId = incrementPlayer(playerId);
         playerId = revisedPlayerId;
@@ -54,6 +54,10 @@ const updateDisplay = function(givenPlayerId){
     const revisedCellValue = getPlayerSymbol(givenPlayerId);
     playerTurnElem.innerText = revisedCellValue + "'s Turn";
 }
+
+const setCellValue = function (cellElem, cellValue){
+    cellElem.innerText = cellValue;
+};
 
 const decrementMoves = function(movesRemaining){
     return movesRemaining - 1;

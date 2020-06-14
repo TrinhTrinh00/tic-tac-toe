@@ -14,5 +14,10 @@ body {
     height: 60px;
     width: 60px;
     text-align: center;
-    cursor: default;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: blue;
+    color: white;
 }
