@@ -57,6 +57,7 @@ const updateDisplay = function(givenPlayerId){
 
 const setCellValue = function (cellElem, cellValue){
     cellElem.innerText = cellValue;
+    cellElem.classList.add("checked");
 };
 
 const decrementMoves = function(movesRemaining){

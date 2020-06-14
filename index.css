@@ -1,10 +1,16 @@
 body {
     background-color: white;
+    font-family: fantasy;
+}
+
+#container {
+    border: 5px solid #cc66ff;
+    display: inline-block;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
 }
 
 .row {
     width: 186px;
-    background-color: yellow;
     display: flex;
 }
 
@@ -15,9 +21,21 @@ body {
     width: 60px;
     text-align: center;
     cursor: pointer;
+    background-color: #ffb3d9;
+    border-color: #cc66ff;
+}
+
+.cell:not(.checked) {
+    color: #cc66ff;
 }
 
 .cell:hover {
-    background-color: blue;
+    background-color: #3399ff;
     color: white;
+}
+
+.cell.checked:hover {
+    cursor: default;
+    background-color: #ffb3d9;
+    color: black;
 }
